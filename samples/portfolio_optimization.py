@@ -1,3 +1,4 @@
+import pathlib
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -73,22 +74,33 @@ def check_sum(weights: list) -> float:
     """
     return np.sum(weights) - 1
 
+
 # Define the symbols
 symbols = ['AAPL', 'MSFT', 'SQ']
+
+# Count the number of symbols.
 number_of_symbols = len(symbols)
 
-# # Initialize the client.
-# price_history_client = PriceHistory(symbols=['AAPL','MSFT','SQ'])
+# If we don't have data then grab it.
+if not pathlib.Path('data/stock_data.csv').exists():
 
-# # # Dump it to a CSV file.
-# # price_history_client.price_data_frame.to_csv(
-# #     'stock_data.csv',
-# #     index=False
-# # )
-# pprint(price_history_client.price_data_frame)
+    # Initialize the client.
+    price_history_client = PriceHistory(symbols=['AAPL','MSFT','SQ'])
 
-# Load the data.
-price_data_frame: pd.DataFrame = pd.read_csv('stock_data.csv')
+    # Dump it to a CSV file.
+    price_history_client.price_data_frame.to_csv(
+        'data/stock_data.csv',
+        index=False
+    )
+    pprint(price_history_client.price_data_frame)
+
+    # Grab the data frame.
+    price_data_frame = price_history_client.price_data_frame
+
+else:
+
+    # Load the data.
+    price_data_frame: pd.DataFrame = pd.read_csv('data/stock_data.csv')
 
 # Pivot the data.
 price_data_frame = price_data_frame[['date', 'symbol', 'close']]

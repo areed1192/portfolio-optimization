@@ -1,4 +1,4 @@
-# Template Repo
+# Portfolio Optimization in Python
 
 ## Table of Contents
 
@@ -8,6 +8,9 @@
 - [Support These Projects](#support-these-projects)
 
 ## Overview
+
+A simple python project where we use price data from the NASDAQ website to help
+optimize our portfolio of stocks using modern portfolio theory.
 
 ## Setup
 
@@ -27,10 +30,26 @@ you can use the library wherever you want.
 
 ## Usage
 
-Here is a simple example of using the `trade_console` library to grab the index
+Here is a simple example of using the `pyopt` library to grab the index
 files for specific quarter.
 
 ```python
+import pandas as pd
+from pyopt.client import PriceHistory
+
+# Define the symbols
+symbols = ['AAPL', 'MSFT', 'SQ']
+number_of_symbols = len(symbols)
+
+# Initialize the client.
+price_history_client = PriceHistory(symbols=['AAPL','MSFT','SQ'])
+
+# Dump it to a CSV file.
+price_history_client.price_data_frame.to_csv(
+    'stock_data.csv',
+    index=False
+)
+pprint(price_history_client.price_data_frame)
 ```
 
 ## Support These Projects
@@ -40,6 +59,3 @@ Help support this project and future projects by donating to my [Patreon Page](h
 
 **YouTube:**
 If you'd like to watch more of my content, feel free to visit my YouTube channel [Sigma Coding](https://www.youtube.com/c/SigmaCoding).
-
-**Hire Me:**
-If you have a project, you think I can help you with feel free to reach out at [coding.sigma@gmail.com](mailto:coding.sigma@gmail.com?subject=[GitHub]%20Project%20Proposal) or fill out the [contract request form](https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAa__aAmF1hURFg5ODdaVTg1TldFVUhDVjJHWlRWRzhZRy4u)

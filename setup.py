@@ -17,7 +17,7 @@ setup(
         'pandas',
         'fake-useragent',
         'python-dateutil',
-        'scikit-learn'
+        'scikit-learn',
         'matplotlib',
         'scipy'
     ],
