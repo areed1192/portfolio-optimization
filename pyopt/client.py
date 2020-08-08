@@ -5,8 +5,8 @@ from typing import List
 from typing import Dict
 from typing import Union
 from datetime import date
-from datetime import timedelta
 from datetime import datetime
+from datetime import timedelta
 from dateutil.relativedelta import *
 
 from fake_useragent import UserAgent
