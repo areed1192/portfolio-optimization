@@ -16,10 +16,10 @@ class PriceHistory():
     """This is a simple Class object for scraping 
     price data from the NASDAQ website."""
 
-    def __init__(self, symbols: List[str]) -> None:
+    def __init__(self, symbols: List[str], user_agent: UserAgent) -> None:
         """Initalizes the PriceHistory client.
 
-        Arguments:
+        ### Arguments:
         ----
         symbols (List[str]): A list of ticker symbols to pull 
             quotes for.
@@ -28,16 +28,17 @@ class PriceHistory():
         self._api_url = 'https://api.nasdaq.com/api/quote'
         self._api_service = 'historical'
         self._symbols = symbols
+        self.user_agent = user_agent
         self.price_data_frame = self._build_data_frames()
 
     def _build_url(self, symbol: str) -> str:
         """Builds a Full URL.
 
-        Arguments:
+        ### Arguments:
         ----
         symbol (str): The symbol you want to build a URL for.
 
-        Returns:
+        ### Returns:
         ----
         str: A URL to the Ticker symbol provided.
         """
@@ -49,7 +50,7 @@ class PriceHistory():
     def symbols(self) -> List[str]:
         """Returns all the symbols currently being pulled.
 
-        Returns:
+        ### Returns:
         ----
         List[str]: A list of ticker symbols.
         """        
@@ -58,7 +59,7 @@ class PriceHistory():
     def _build_data_frames(self) -> pd.DataFrame:
         """Builds a data frame with all the price data.
 
-        Returns:
+        ### Returns:
         ----
         pd.DataFrame: A Pandas DataFrame with the data cleaned
             and sorted.
@@ -86,7 +87,7 @@ class PriceHistory():
     def _grab_prices(self, symbol: str, from_date: date, to_date: date) -> List[Dict]:
         """Grabs the prices.
 
-        Arguments:
+        ### Arguments:
         ----
         symbol (str): The symbol to pull prices for.
         
@@ -94,7 +95,7 @@ class PriceHistory():
         
         to_date (date): The ending data to pull prices for.
 
-        Returns:
+        ### Returns:
         ----
         List[Dict]: A list of candle dictionaries.
         """        
@@ -115,7 +116,7 @@ class PriceHistory():
 
         # Fake the headers.
         headers = {
-            'user-agent': UserAgent().edge
+            'user-agent': self.user_agent
         }
 
         # Grab the historical data.
