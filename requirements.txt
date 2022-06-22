@@ -1,6 +1,6 @@
 requests==2.24.0
 matplotlib==3.3.0
-numpy==1.19.0
+numpy==1.22.0
 pandas==1.0.5
 scipy==1.5.2
 fake_useragent==0.1.11
