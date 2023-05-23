@@ -13,7 +13,7 @@ setup(
     long_description_content_type="text/markdown",
     url='https://github.com/areed1192/portfolio-optimization',
     install_requires=[
-        'requests==2.24.0',
+        'requests==2.31.0',
         'matplotlib==3.3.0',
         'numpy==1.22.0',
         'pandas==1.0.5',
