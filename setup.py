@@ -17,7 +17,7 @@ setup(
         'matplotlib==3.3.0',
         'numpy==1.22.0',
         'pandas==1.0.5',
-        'scipy==1.5.2',
+        'scipy==1.10.0',
         'fake_useragent==0.1.11',
         'python_dateutil==2.8.1',
         'scikit_learn==0.23.2'
