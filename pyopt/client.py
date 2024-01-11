@@ -1,5 +1,7 @@
+from matplotlib.pyplot import hist
 import requests
 import pandas as pd
+import re
 
 from typing import List
 from typing import Dict
@@ -17,13 +19,11 @@ class PriceHistory():
     price data from the NASDAQ website."""
 
     def __init__(self, symbols: List[str], user_agent: UserAgent) -> None:
-        """Initalizes the PriceHistory client.
+        """Initializes the PriceHistory client.
 
-        ### Arguments:
-        ----
-        symbols (List[str]): A list of ticker symbols to pull 
-            quotes for.
-        """              
+        #### Arguments:
+        - `symbols` (List[str]): A list of ticker symbols to pull quotes for.
+        """
 
         self._api_url = 'https://api.nasdaq.com/api/quote'
         self._api_service = 'historical'
@@ -66,7 +66,7 @@ class PriceHistory():
         """        
 
         all_data = []
-        to_date = datetime.today().date()
+        to_date = datetime.now().date()
 
         # Calculate the Start and End Point.
         from_date = to_date - relativedelta(months=6)
@@ -78,10 +78,10 @@ class PriceHistory():
                 from_date=from_date,
                 to_date=to_date
             ) + all_data
-        
+
         price_data_frame = pd.DataFrame(data=all_data)
         price_data_frame['date'] = pd.to_datetime(price_data_frame['date'])
-    
+
         return price_data_frame
 
     def _grab_prices(self, symbol: str, from_date: date, to_date: date) -> List[Dict]:
@@ -130,16 +130,17 @@ class PriceHistory():
         # If it's okay parse it.
         if historical_data.ok:
             historical_data = historical_data.json()
+            # Uncomment to debug the historical data parsing
+            # print(historical_data)
             historical_data = historical_data['data']['tradesTable']['rows']
 
             # Clean the data.
             for table_row in historical_data:
                 table_row['symbol'] = symbol
-                table_row['close'] = float(table_row['close'].replace('$',''))
+                table_row['close'] = float(re.sub('[$,]', '', table_row['close']))
                 table_row['volume'] = int(table_row['volume'].replace(',',''))
-                table_row['open'] = float(table_row['open'].replace('$',''))
-                table_row['high'] = float(table_row['high'].replace('$',''))
-                table_row['low'] = float(table_row['low'].replace('$',''))
+                table_row['open'] = float(re.sub('[$,]', '', table_row['open']))
+                table_row['high'] = float(re.sub('[$,]', '', table_row['high']))
+                table_row['low'] = float(re.sub('[$,]', '', table_row['low']))
 
             return historical_data
-
